@@ -45,13 +45,74 @@
 
 // third exercice
 
-const main = document.querySelector('main');
-for ( let i =0 ; i < 12 ; i++){
-    const div = document.createElement('div');
-    div.id = i;
-    div.className = "circle";
-    main.appendChild(div);
+
+
+
+// all the global variables
+
+const getMain = document.querySelector('main');
+const getP = document.querySelector('p');
+const getSpan = document.querySelector('span');
+let score = 0;
+let lifes = 0;
+
+
+// function to create all the div 
+
+
+const getCircle = (nbrOfCircle) =>{
+    for ( let i =0 ; i < nbrOfCircle ; i++){
+        const div = document.createElement('div');
+        div.id = i;
+        div.className = "circle";
+        main.appendChild(div);
+    }
 }
+
+// function to make a cricle red indefinitely
+
+const getRedCircle = (nbrOfCircle) =>{
+    let getCircleId = Math.floor(Math.random()*nbrOfCircle);
+    let circleId = document.getElementById(getCircleId);
+    circleId.classList.add('red');
+}
+
+const removeRedCircle = (redElement) =>{
+    redElement.classList.remove('red');
+}
+
+const Clicked = (element) =>{
+    element.setAttribute('clicked',1);
+}
+
+const getScore = () =>{
+    score ++;
+}
+
+const getLifes = () => {
+    lifes --;
+   
+}
+
+const checkLifes = () =>{
+    if ( lifes < 1){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function getRed() {
         let num = Math.floor(Math.random()*12);
