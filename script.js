@@ -102,6 +102,23 @@ const removeRedCircle = () =>{
 }
 
 
+// Clear all the color on the screen
+const clearScreen = () =>{
+    const blueCircles = document.querySelectorAll('.clicked');
+    if ( blueCircles.length > 0){
+        blueCircles.forEach(i => {
+            i.classList.remove('clicked');
+        });
+    }
+    const redCircles = document.querySelectorAll('.red');
+    if ( redCircles.length > 0){
+        redCircles.forEach(i => {
+            i.classList.remove('red');
+        });
+    }
+}
+
+
 
 // code to execute
 
@@ -110,6 +127,21 @@ const aListe = document.querySelectorAll('div');
 
 let game =setInterval(getredCircle,1000); // start the game here ( as soon as the page load).
 // EVENTS
+
+
+// event on button to restart the game
+
+document.querySelector('input').addEventListener('click', reStartGame =>{
+    clearScreen();
+    lifes = 10;
+    score = 0;
+
+    scoreLine.textContent = 'Your score is: ' + score;
+    lifesLine.textContent = 'Lifes remaining: ' + lifes;
+
+    game = setInterval(getredCircle,1000);
+
+})
 
 // on click on each circle to add score or reduce lifes.
 aListe.forEach(circle => {
