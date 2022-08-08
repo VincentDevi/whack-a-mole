@@ -8,7 +8,10 @@ let score = 0;
 scoreLine.textContent = 'Your score is: ' + score;
 lifesLine.textContent = 'Lifes remaining: ' + lifes;
 
+
+
 // create Circle
+
 const getDiv = () =>{
     for (let i = 0; i < 12 ; i++){
         const div = document.createElement('div');
@@ -19,14 +22,33 @@ const getDiv = () =>{
     }
 }
 
+
+// check score and set difficulty
+
+const checkDifficulty = () =>{
+    if ( score < 5 ){
+        setTimeout(removeRedCircle,900);
+    }
+    else if ( score > 4 && score < 10){
+        setTimeout(removeRedCircle,700);
+    }
+    else{
+        setTimeout(removeRedCircle,500);
+    }
+}
+
+// check the lifes and stop the game or call a function to continue.
 const checkLifes = () =>{
     if (lifes < 1){
         clearInterval(game);
     }
     else{
-        setTimeout(removeRedCircle,900);
+        checkDifficulty();
     }
 }
+
+
+// check if an element has the 'clicked' class
 
 const isClicked = (element) =>{
     if ( element.classList.contains('clicked')){
@@ -39,6 +61,9 @@ const isClicked = (element) =>{
     }
 }
 
+
+// create a random number between 0 and the number of circle, get the corresponding id and add a red class
+
 const getredCircle = () =>{
     const randomCircle = Math.floor(Math.random()*12);
     const div = document.getElementById(randomCircle);
@@ -49,6 +74,8 @@ const getredCircle = () =>{
     
 }
 
+
+// function to remove the red circle and all the possible blue.
 
 const removeRedCircle = () =>{
     const redCircle = document.querySelector('.red');
@@ -78,11 +105,13 @@ const removeRedCircle = () =>{
 
 // code to execute
 
-getDiv();
-let game =setInterval(getredCircle,1000);
-const aListe = document.querySelectorAll('div');
+getDiv(); // create all the circle
+const aListe = document.querySelectorAll('div'); 
 
+let game =setInterval(getredCircle,1000); // start the game here ( as soon as the page load).
+// EVENTS
 
+// on click on each circle to add score or reduce lifes.
 aListe.forEach(circle => {
     circle.addEventListener('click', getScore =>{
         let circleClicked = getScore.target;
