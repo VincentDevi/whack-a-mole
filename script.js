@@ -1,200 +1,102 @@
-// First exercice
-
-// const para = document.querySelector('p');
-// const word = 'prout';
-// let index = 0;
-
-// function prout() {
-//         if (index<word.length){
-//             para.appendChild(document.createTextNode(word[index]));
-//             index ++ ;
-//         }
-//         else{
-//             clearInterval();
-//         }
-       
-    
-// }
-// setInterval(prout,1000);
-
-
-//second exercice
-// let second =0;
-// let minute =0;
-// let hour =0;
-// function time() {
-//     if (second<60){
-//         second ++;
-//     }
-//     else if (second == 60 && minute <60){
-//         second = 1;
-//         minute ++;
-//     }
-//     else{
-//         minute = 0;
-//         hour ++;
-//     }
-//     console.log(second + ": second has passed. " + minute +": minute has passed. " +hour + ": hour has passed. ");
-
-// }
-
-
-
-// setInterval(time, 1000);
-
-
-// third exercice
-
-
-
-
-// all the global variables
-
+//global variables
 const getMain = document.querySelector('main');
-const getP = document.querySelector('p');
-const getSpan = document.querySelector('span');
+const scoreLine = document.querySelector('p');
+const lifesLine = document.querySelector('span');
+let lifes = 10;
 let score = 0;
-let lifes = 0;
 
+scoreLine.textContent = 'Your score is: ' + score;
+lifesLine.textContent = 'Lifes remaining: ' + lifes;
 
-// function to create all the div 
-
-
-const getCircle = (nbrOfCircle) =>{
-    for ( let i =0 ; i < nbrOfCircle ; i++){
+// create Circle
+const getDiv = () =>{
+    for (let i = 0; i < 12 ; i++){
         const div = document.createElement('div');
         div.id = i;
-        div.className = "circle";
-        main.appendChild(div);
+        div.classList.add('circle');
+        getMain.appendChild(div);
+
     }
-}
-
-// function to make a cricle red indefinitely
-
-const getRedCircle = (nbrOfCircle) =>{
-    let getCircleId = Math.floor(Math.random()*nbrOfCircle);
-    let circleId = document.getElementById(getCircleId);
-    circleId.classList.add('red');
-}
-
-const removeRedCircle = (redElement) =>{
-    redElement.classList.remove('red');
-}
-
-const Clicked = (element) =>{
-    element.setAttribute('clicked',1);
-}
-
-const getScore = () =>{
-    score ++;
-}
-
-const getLifes = () => {
-    lifes --;
-   
 }
 
 const checkLifes = () =>{
-    if ( lifes < 1){
-        return false;
+    if (lifes < 1){
+        clearInterval(game);
     }
     else{
+        setTimeout(removeRedCircle,900);
+    }
+}
+
+const isClicked = (element) =>{
+    if ( element.classList.contains('clicked')){
+        element.classList.remove('clicked');
         return true;
     }
+    else{
+        return false;
+       
+    }
+}
+
+const getredCircle = () =>{
+    const randomCircle = Math.floor(Math.random()*12);
+    const div = document.getElementById(randomCircle);
+    div.classList.add('red');
+    
+    checkLifes();
+
+    
 }
 
 
-
-
-
-
-
-
-
-
-
-
-function getRed() {
-        let num = Math.floor(Math.random()*12);
-        console.log(num);
-        let getElement = document.getElementById(num);
-        console.log(getElement);
-        getElement.classList.add('red');
-        
-        if (lives>0){
-            setTimeout(removeRed,1000);
-
-            setTimeout(getRed,1000);
+const removeRedCircle = () =>{
+    const redCircle = document.querySelector('.red');
+    if (redCircle == null){
+        return 
+    }
+    else{
+        if (isClicked(redCircle)== true){
+            console.log('ok');
         }
         else{
-            alert('You noob');
-            let res = prompt('Try again : Y/N');
-            if(res==="Y" || res==="y"){
-                const p = document.querySelector('p');
-                const s = document.querySelector('span');
-                lives = 5;
-                compteur =0;
-                s.textContent = 'Lifes: '+lives;
-                p.textContent = "Score: "+compteur;
-                setTimeout(getRed,1000);
-                setTimeout(removeRed,1000);
-            }
-            else{
-                return 
-            }
-        }
-
-}
- 
-function removeRed() {
-    const el = document.querySelector('.red');
-    if (el==null){
-        console.log('prout');
-        
-
-    }
-    else{
-      
-        el.classList.remove('red');   
-        lives --;      
-        sp.textContent = "Lifes :" + lives;
-       
-    }
-   
-}
-
-let lives =5;
-let compteur = 0;
-
-const p = document.querySelector('p');
-const sp = document.querySelector('span');
-p.innerHTML = "Score :" + compteur;
-sp.textContent = "Lifes :" + lives;
-
-
-const getDiv = document.querySelectorAll('div');
-for (const adiv of getDiv) {
-    adiv.addEventListener('click', event =>{
-    let a = event.target;
+            lifes --;
+            lifesLine.textContent = 'Lifes remaining: ' + lifes;
     
-    if ( a.classList.contains('red')){
-        removeRed();
-        compteur++;
-        lives ++;
-        p.innerHTML = "score: " + compteur;
-       
+        }
+        redCircle.classList.remove('red');
     }
-    else{
-        
-        lives --;
-        sp.innerHTML = "Lifes: " + lives;
-        sp.textContent = "Lifes :" + lives;
-
-
-   
+    const blueCircle = document.querySelectorAll('.clicked');
+    if ( blueCircle.length>0){
+        blueCircle.forEach(i => {
+            i.classList.remove('clicked');
+        });
     }
-})
 }
 
 
-setTimeout(getRed,1000);
+
+// code to execute
+
+getDiv();
+let game =setInterval(getredCircle,1000);
+const aListe = document.querySelectorAll('div');
+
+
+aListe.forEach(circle => {
+    circle.addEventListener('click', getScore =>{
+        let circleClicked = getScore.target;
+        circleClicked.classList.add('clicked');
+        
+        if ( circleClicked.classList.contains('red') ){
+            score ++;
+            scoreLine.textContent = 'Your score is: ' + score;
+
+        }
+        else{
+            lifes --;
+            lifesLine.textContent = 'Lifes remaining: ' + lifes;
+
+        }
+    })
+});
