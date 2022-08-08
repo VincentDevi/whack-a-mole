@@ -7,8 +7,8 @@ body{
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    
+   align-items: center;
 }
 main{
     width: 500px;
@@ -19,12 +19,34 @@ main{
   
 
 }
-span{
-    color: white;
+.menu{
+    height: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    &__lifes{
+        color: white;
+    }
+    &__score{
+        color: white;
+    }
+    &__button{
+        width: 100px;
+        height: 50px;
+        border-radius: 20px;
+        background-color: blue;
+        color: white;
+        &:hover{
+            color: black;
+            background-color: red;
+        }
+    }
+
 }
-p{
-    color: white;
-}
+
+
 .circle{
     background-color: black;
     margin: 20px;
